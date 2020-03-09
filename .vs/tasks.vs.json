@@ -1,0 +1,10 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskName": "task-2_1",
+      "appliesTo": "delegation/2_1.png",
+      "type": "launch"
+    }
+  ]
+}

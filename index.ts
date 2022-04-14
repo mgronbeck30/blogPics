@@ -1,16 +1,16 @@
 import {IInputs, IOutputs} from "./generated/ManifestTypes";
 import { ITextFieldProps,TextFieldControlledExample } from "./copy2clipboard";
-import * as ReactDOM from "react-dom";
-import * as React from "react";
-import {initializeIcons} from '@uifabric/icons';
-import { isNullOrUndefined } from "util";
+import * as ReactDOM from "react-dom";
+import * as React from "react";
+import {initializeIcons} from '@uifabric/icons';
+
 
 export class CopyText implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 
 	private notifyOutputChanged: () => void;
     private _container: HTMLDivElement;
 	private _input: string;
-	private _inputElement: React.ReactElement;
+	private _inputElement: React.ReactElement;
     private props: ITextFieldProps = {
         onInputChanged: this.inputValueChanged.bind(this)
     };
@@ -32,7 +32,7 @@ export class CopyText implements ComponentFramework.StandardControl<IInputs, IOu
     {
         initializeIcons();
         this._container = container;
-        if(!isNullOrUndefined(context.parameters._inputProperty) && !isNullOrUndefined(context.parameters._inputProperty.raw)){
+        if(context.parameters._inputProperty != null){
             this._input = context.parameters._inputProperty.raw || "";
             this.props.inputValue = this._input;
             this.notifyOutputChanged = notifyOutputChanged;
@@ -45,8 +45,8 @@ export class CopyText implements ComponentFramework.StandardControl<IInputs, IOu
      */
     public updateView(context: ComponentFramework.Context<IInputs>): void
     {
-        if(this._input != context.parameters._inputProperty.raw || (isNullOrUndefined(this._input)&&!isNullOrUndefined(context.parameters._inputProperty.raw))){
-            this._input = context.parameters._inputProperty.raw||"";
+        if(this._input != context.parameters._inputProperty.raw || (this._input != null && this._input != undefined && context.parameters._inputProperty.raw != null && context.parameters._inputProperty.raw != undefined )){
+            this._input = context.parameters._inputProperty.raw || "";
         }
         ReactDOM.render(
             this._inputElement = React.createElement(TextFieldControlledExample,this.props),
@@ -74,4 +74,3 @@ export class CopyText implements ComponentFramework.StandardControl<IInputs, IOu
         // Add code to cleanup control if necessary
     }
 }
-
